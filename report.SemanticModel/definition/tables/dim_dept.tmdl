@@ -1,0 +1,49 @@
+table dim_dept
+	lineageTag: 40e5f9bf-a1d0-4dee-9d38-81dd7f54f8cc
+
+	column dept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 69133d6e-dd81-49fd-9061-3c300f619659
+		summarizeBy: none
+		sourceColumn: dept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column dept_name
+		dataType: string
+		lineageTag: c9f7e95f-9603-497b-9c8e-d8273d629b4f
+		summarizeBy: none
+		sourceColumn: dept_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 60a40f74-d2f6-46a7-8dd2-ea3038dbe062
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column population
+		dataType: int64
+		formatString: 0
+		lineageTag: e3e81216-e626-468a-86f2-c9673cdd7505
+		summarizeBy: none
+		sourceColumn: population
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_dept = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("\\wsl.localhost\Ubuntu\home\slim\sante-occitanie\data\processed\dim_dept.csv"),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dept_id", Int64.Type}, {"dept_name", type text}, {"region", type text}, {"population", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

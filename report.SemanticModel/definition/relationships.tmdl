@@ -1,0 +1,28 @@
+relationship da4018c0-4752-49f4-8593-58422be8dfd2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_date.date
+	toColumn: LocalDateTable_41990448-f987-4d18-ad5c-92ef424f2252.Date
+
+relationship d3402fad-27a8-4e0e-b55f-815db9260002
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_date.year_month
+	toColumn: LocalDateTable_3b5476a6-eadb-4bf3-b10b-d4c4bc7593ce.Date
+
+relationship a5d3b36a-25a7-48ae-ad1a-f190dfa093c7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_waves.start
+	toColumn: LocalDateTable_8cb325c2-db06-4421-a57c-c1c09dc8080a.Date
+
+relationship 55b4d45e-eacc-46e6-bef9-b486bcff3ba2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_waves.end
+	toColumn: LocalDateTable_5af0444f-0a45-4cc4-a29c-d7541ddbdaa6.Date
+
+relationship AutoDetected_0a314908-d09e-4464-9124-3039e50b62cc
+	fromColumn: fact_hospital.dept_id
+	toColumn: dim_dept.dept_id
+
+relationship 2f5abf08-fae4-27df-e10e-d2e7eb42468b
+	fromColumn: fact_hospital.date
+	toColumn: dim_date.date
+

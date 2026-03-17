@@ -1,0 +1,73 @@
+table dim_waves
+	lineageTag: 157d1006-ec13-4145-adcf-b46376b9b789
+
+	column wave
+		dataType: int64
+		formatString: 0
+		lineageTag: c1fd22c7-4980-4248-b97e-dec51687b672
+		summarizeBy: sum
+		sourceColumn: wave
+
+		annotation SummarizationSetBy = Automatic
+
+	column label
+		dataType: string
+		lineageTag: d6729cbf-6fe1-40b7-a62c-dbf8075d6f78
+		summarizeBy: none
+		sourceColumn: label
+
+		annotation SummarizationSetBy = Automatic
+
+	column start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5eda96e7-0a98-4c63-9955-f7c45fc874b6
+		summarizeBy: none
+		sourceColumn: start
+
+		variation Variation
+			isDefault
+			relationship: a5d3b36a-25a7-48ae-ad1a-f190dfa093c7
+			defaultHierarchy: LocalDateTable_8cb325c2-db06-4421-a57c-c1c09dc8080a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column end
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 589b63e8-0f96-45e6-8d4b-31b3f84de147
+		summarizeBy: none
+		sourceColumn: end
+
+		variation Variation
+			isDefault
+			relationship: 55b4d45e-eacc-46e6-bef9-b486bcff3ba2
+			defaultHierarchy: LocalDateTable_5af0444f-0a45-4cc4-a29c-d7541ddbdaa6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column duration_days
+		dataType: int64
+		formatString: 0
+		lineageTag: b1dc5071-13f0-4a89-8e13-d0fdd696f10c
+		summarizeBy: sum
+		sourceColumn: duration_days
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_waves = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("\\wsl.localhost\Ubuntu\home\slim\sante-occitanie\data\processed\dim_waves.csv"),[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"wave", Int64.Type}, {"label", type text}, {"start", type date}, {"end", type date}, {"duration_days", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

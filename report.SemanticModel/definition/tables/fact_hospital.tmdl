@@ -1,0 +1,103 @@
+table fact_hospital
+	lineageTag: a680ae2d-b93d-40da-8aaa-0ad7af210b96
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 82bc6b43-c3a1-48c6-a997-b49270555a30
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column dept_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f9f391a-2e7b-4c1c-8471-a3d210ff466e
+		summarizeBy: none
+		sourceColumn: dept_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column hosp_occupied
+		dataType: int64
+		formatString: 0
+		lineageTag: 4889ad37-9bf8-4394-b75c-2b3e04f0d326
+		summarizeBy: sum
+		sourceColumn: hosp_occupied
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_occupied
+		dataType: int64
+		formatString: 0
+		lineageTag: 315841b2-90b6-4000-90b3-d1921edb3086
+		summarizeBy: sum
+		sourceColumn: icu_occupied
+
+		annotation SummarizationSetBy = Automatic
+
+	column deaths_cumul
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d5c1be6-5291-4085-b9b8-265219d4de07
+		summarizeBy: sum
+		sourceColumn: deaths_cumul
+
+		annotation SummarizationSetBy = Automatic
+
+	column deaths_daily
+		dataType: string
+		lineageTag: 798e9a56-360e-4117-b742-1fe47a263ddb
+		summarizeBy: none
+		sourceColumn: deaths_daily
+
+		annotation SummarizationSetBy = Automatic
+
+	column returned_home_cumul
+		dataType: int64
+		formatString: 0
+		lineageTag: b62cce08-2026-444f-a8c8-24af47af50ff
+		summarizeBy: sum
+		sourceColumn: returned_home_cumul
+
+		annotation SummarizationSetBy = Automatic
+
+	column hosp_per_100k
+		dataType: string
+		lineageTag: 1595e50d-6c73-4ff8-9ce0-009bc635b827
+		summarizeBy: none
+		sourceColumn: hosp_per_100k
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_per_100k
+		dataType: string
+		lineageTag: db280dd1-1080-433b-a697-cd91049b4beb
+		summarizeBy: none
+		sourceColumn: icu_per_100k
+
+		annotation SummarizationSetBy = Automatic
+
+	column wave_label
+		dataType: string
+		lineageTag: 08765ab3-793b-44ea-8a1e-84265273e926
+		summarizeBy: none
+		sourceColumn: wave_label
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_hospital = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("\\wsl.localhost\Ubuntu\home\slim\sante-occitanie\data\processed\fact_hospital.csv"),[Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"date", type date}, {"dept_id", Int64.Type}, {"hosp_occupied", Int64.Type}, {"icu_occupied", Int64.Type}, {"deaths_cumul", Int64.Type}, {"deaths_daily", type text}, {"returned_home_cumul", Int64.Type}, {"hosp_per_100k", type text}, {"icu_per_100k", type text}, {"wave_label", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

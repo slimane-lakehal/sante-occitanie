@@ -1,0 +1,141 @@
+table dim_date
+	lineageTag: 7a7074ee-fcbe-4428-a36a-635295541949
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cad1a610-5038-4e9c-b3dd-e10eb308bf10
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: da4018c0-4752-49f4-8593-58422be8dfd2
+			defaultHierarchy: LocalDateTable_41990448-f987-4d18-ad5c-92ef424f2252.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: ae3e9d7a-7d21-4410-ac89-5efffa1caa67
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_num
+		dataType: int64
+		formatString: 0
+		lineageTag: f1e6b205-9b42-47fc-947b-640460649261
+		summarizeBy: sum
+		sourceColumn: month_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_label
+		dataType: string
+		lineageTag: 9db8c675-b144-4576-be07-6126e03aa47d
+		summarizeBy: none
+		sourceColumn: month_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_short
+		dataType: string
+		lineageTag: 3ca29fe4-2bce-4ccd-b0e5-162dd59d0fdf
+		summarizeBy: none
+		sourceColumn: month_short
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_num
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ea44936-5597-4171-b9d8-7ac01ffb2c4d
+		summarizeBy: sum
+		sourceColumn: week_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 5203b126-f30f-49da-a41e-3d3542d5eaee
+		summarizeBy: sum
+		sourceColumn: quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter_label
+		dataType: string
+		lineageTag: 4a7ffadf-8688-49b4-85ec-9849f5cb3b3c
+		summarizeBy: none
+		sourceColumn: quarter_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column weekday_num
+		dataType: int64
+		formatString: 0
+		lineageTag: 39e1381d-7913-44c1-9e80-6d969f44f447
+		summarizeBy: sum
+		sourceColumn: weekday_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column weekday_label
+		dataType: string
+		lineageTag: 42ba4567-10ea-4247-b5b5-6ac1282b9cd1
+		summarizeBy: none
+		sourceColumn: weekday_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_weekend
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6e89c887-5404-46f4-a58c-2a23e63ba51b
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e35fa559-1db9-475d-b75a-87982e5a0331
+		summarizeBy: none
+		sourceColumn: year_month
+
+		variation Variation
+			isDefault
+			relationship: d3402fad-27a8-4e0e-b55f-815db9260002
+			defaultHierarchy: LocalDateTable_3b5476a6-eadb-4bf3-b10b-d4c4bc7593ce.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column wave_label
+		dataType: string
+		lineageTag: dbc1edc6-7c76-4f4d-aae8-3f288ef95cce
+		summarizeBy: none
+		sourceColumn: wave_label
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("\\wsl.localhost\Ubuntu\home\slim\sante-occitanie\data\processed\dim_date.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"date", type date}, {"year", Int64.Type}, {"month_num", Int64.Type}, {"month_label", type text}, {"month_short", type text}, {"week_num", Int64.Type}, {"quarter", Int64.Type}, {"quarter_label", type text}, {"weekday_num", Int64.Type}, {"weekday_label", type text}, {"is_weekend", type logical}, {"year_month", type date}, {"wave_label", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

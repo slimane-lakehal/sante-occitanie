@@ -1,0 +1,26 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: fr-FR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["dim_date","dim_dept","dim_waves","fact_hospital"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_date
+ref table DateTableTemplate_0dd19d14-d66d-48a7-8acf-f4167e8e4de3
+ref table LocalDateTable_41990448-f987-4d18-ad5c-92ef424f2252
+ref table LocalDateTable_3b5476a6-eadb-4bf3-b10b-d4c4bc7593ce
+ref table dim_dept
+ref table dim_waves
+ref table LocalDateTable_8cb325c2-db06-4421-a57c-c1c09dc8080a
+ref table LocalDateTable_5af0444f-0a45-4cc4-a29c-d7541ddbdaa6
+ref table fact_hospital
+
+ref cultureInfo en-US
+
