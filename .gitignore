@@ -1,0 +1,22 @@
+# Environment
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Data (raw is reproducible, processed is derived — neither needs versioning)
+data/raw/
+data/processed/
+
+# Power BI (binary, not diffable — optionally track if you want)
+# powerbi/*.pbix
+
+# OS
+.DS_Store
+Thumbs.db
