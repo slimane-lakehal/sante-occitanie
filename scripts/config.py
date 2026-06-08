@@ -60,7 +60,7 @@ DEPT_POPULATION = {
     "82": 260_928,
 }
 
-# ── Data sources (data.gouv.fr — no auth needed) ───
+# ── Data sources (data.gouv.fr) ───
 SOURCES = {
     "hospital_covid": {
         "url": "https://www.data.gouv.fr/fr/datasets/r/63352e38-d353-4b54-bfd1-f1b3ee1cabd7",

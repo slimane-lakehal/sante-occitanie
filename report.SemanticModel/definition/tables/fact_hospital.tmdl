@@ -8,6 +8,8 @@ table fact_hospital
 		summarizeBy: none
 		sourceColumn: date
 
+		changedProperty = SortByColumn
+
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
